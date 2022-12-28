@@ -25,17 +25,12 @@ type Comment struct {
 }
 
 func populate() []Tutorial {
-	author := &Author{
-		Name:      "Chizi Victor",
-		Tutorials: []int{1},
-	}
+	author := &Author{Name: "Chizi Victor", Tutorials: []int{1}}
 	tutorial := Tutorial{
-		ID:     1,
-		Title:  "Go graphQL Tutorial",
-		Author: *author,
-		Comments: []Comment{
-			{Body: "First Comment"},
-		},
+		ID:       1,
+		Title:    "Go graphQL Tutorial",
+		Author:   *author,
+		Comments: []Comment{{Body: "First Comment"}},
 	}
 
 	var tutorials []Tutorial
@@ -52,9 +47,7 @@ func main() {
 		graphql.ObjectConfig{
 			Name: "Comment",
 			Fields: graphql.Fields{
-				"body": &graphql.Field{
-					Type: graphql.String,
-				},
+				"body": &graphql.Field{Type: graphql.String},
 			},
 		},
 	)
@@ -63,12 +56,8 @@ func main() {
 		graphql.ObjectConfig{
 			Name: "Author",
 			Fields: graphql.Fields{
-				"Name": &graphql.Field{
-					Type: graphql.String,
-				},
-				"Tutorials": &graphql.Field{
-					Type: graphql.NewList(graphql.Int),
-				},
+				"Name":      &graphql.Field{Type: graphql.String},
+				"Tutorials": &graphql.Field{Type: graphql.NewList(graphql.Int)},
 			},
 		},
 	)
@@ -77,18 +66,10 @@ func main() {
 		graphql.ObjectConfig{
 			Name: "Tutorial",
 			Fields: graphql.Fields{
-				"id": &graphql.Field{
-					Type: graphql.Int,
-				},
-				"title": &graphql.Field{
-					Type: graphql.String,
-				},
-				"author": &graphql.Field{
-					Type: authorType,
-				},
-				"comments": &graphql.Field{
-					Type: graphql.NewList(commentType),
-				},
+				"id":       &graphql.Field{Type: graphql.Int},
+				"title":    &graphql.Field{Type: graphql.String},
+				"author":   &graphql.Field{Type: authorType},
+				"comments": &graphql.Field{Type: graphql.NewList(commentType)},
 			},
 		},
 	)
@@ -98,9 +79,7 @@ func main() {
 			Type:        tutorialType,
 			Description: "Get Tutorial by ID",
 			Args: graphql.FieldConfigArgument{
-				"id": &graphql.ArgumentConfig{
-					Type: graphql.Int,
-				},
+				"id": &graphql.ArgumentConfig{Type: graphql.Int},
 			},
 			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
 				id, ok := p.Args["id"].(int)
